@@ -2,7 +2,7 @@ library flutter_progress_hud;
 
 import 'package:flutter/material.dart';
 
-class ProgressHUD extends StatefulWidget {
+class ProgressHUB extends StatefulWidget {
   final Widget child;
   final Color indicatorColor;
   final Widget? indicatorWidget;
@@ -14,29 +14,31 @@ class ProgressHUD extends StatefulWidget {
   final Color barrierColor;
   final TextStyle textStyle;
   final EdgeInsetsGeometry padding;
+  final Widget loading ;
 
-  ProgressHUD(
+
+  ProgressHUB(
       {required this.child,
-      this.indicatorColor = Colors.white,
-      this.indicatorWidget,
-      this.backgroundColor = Colors.black54,
-      this.backgroundRadius = const Radius.circular(8.0),
-      this.borderColor = Colors.white,
-      this.borderWidth = 0.0,
-      this.barrierEnabled = true,
-      this.barrierColor = Colors.black12,
-      this.textStyle = const TextStyle(color: Colors.white, fontSize: 14.0),
-      this.padding = const EdgeInsets.all(16.0)});
+        this.indicatorColor = Colors.white,
+        this.indicatorWidget,
+        this.backgroundColor = Colors.black54,
+        this.backgroundRadius = const Radius.circular(8.0),
+        this.borderColor = Colors.white,
+        this.borderWidth = 0.0,
+        this.barrierEnabled = true,
+        this.barrierColor = Colors.black12,
+        this.textStyle = const TextStyle(color: Colors.white, fontSize: 14.0),
+        this.padding = const EdgeInsets.all(16.0), required this.loading});
 
-  static _ProgressHUDState? of(BuildContext context) {
-    final progressHudState = context.findAncestorStateOfType<_ProgressHUDState>();
+  static _ProgressHUBState? of(BuildContext context) {
+    final progressHudState = context.findAncestorStateOfType<_ProgressHUBState>();
 
     assert(() {
       if (progressHudState == null) {
         throw FlutterError(
             'ProgressHUD operation requested with a context that does not include a ProgressHUD.\n'
-            'The context used to show ProgressHUD must be that of a widget '
-            'that is a descendant of a ProgressHUD widget.');
+                'The context used to show ProgressHUD must be that of a widget '
+                'that is a descendant of a ProgressHUD widget.');
       }
       return true;
     }());
@@ -45,10 +47,10 @@ class ProgressHUD extends StatefulWidget {
   }
 
   @override
-  _ProgressHUDState createState() => _ProgressHUDState();
+  _ProgressHUBState createState() => _ProgressHUBState();
 }
 
-class _ProgressHUDState extends State<ProgressHUD>
+class _ProgressHUBState extends State<ProgressHUB>
     with SingleTickerProviderStateMixin {
   bool _isShow = false;
   bool _barrierVisible = false;
@@ -68,7 +70,7 @@ class _ProgressHUDState extends State<ProgressHUD>
   }
 
   void showWithText(String text) {
-   if (mounted) {
+    if (mounted) {
       setState(() {
         _text = text;
         _controller.forward();
@@ -126,7 +128,7 @@ class _ProgressHUDState extends State<ProgressHUD>
         ),
       );
     }
-    children.add(Center(child: _buildProgress()));
+    children.add(Center(child:CircularProgressIndicator()));
 
     return Stack(
       children: <Widget>[
@@ -180,8 +182,8 @@ class _ProgressHUDState extends State<ProgressHUD>
 
   Widget _buildDefaultIndicator() {
     return Container(
-      width: 40.0,
-      height: 40.0,
+      // width: 40.0,
+      // height: 40.0,
       child: CircularProgressIndicator(
         strokeWidth: 3.0,
         valueColor: AlwaysStoppedAnimation(widget.indicatorColor),
