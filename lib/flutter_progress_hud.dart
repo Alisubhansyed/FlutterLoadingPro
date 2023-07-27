@@ -128,7 +128,7 @@ class _ProgressHUBState extends State<ProgressHUB>
         ),
       );
     }
-    children.add(Center(child:CircularProgressIndicator()));
+    children.add(Center(child:widget.loading));
 
     return Stack(
       children: <Widget>[
@@ -184,10 +184,7 @@ class _ProgressHUBState extends State<ProgressHUB>
     return Container(
       // width: 40.0,
       // height: 40.0,
-      child: CircularProgressIndicator(
-        strokeWidth: 3.0,
-        valueColor: AlwaysStoppedAnimation(widget.indicatorColor),
-      ),
+      child:widget.loading,
     );
   }
 }
